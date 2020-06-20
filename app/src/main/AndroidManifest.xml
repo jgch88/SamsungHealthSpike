@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.samsung.android.health.permission.read"
-            android:value="com.samsung.health.step_daily_trend" />
+            android:value="com.samsung.health.heart_rate;com.samsung.health.step_daily_trend;com.samsung.health.step_count;com.samsung.health.exercise" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

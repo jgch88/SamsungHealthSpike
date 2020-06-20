@@ -84,16 +84,19 @@ class MainActivity : AppCompatActivity() {
             HealthConstants.StepCount.HEALTH_DATA_TYPE,
             HealthPermissionManager.PermissionType.READ
         )
+        val permKey2 = HealthPermissionManager.PermissionKey(
+            HealthConstants.HeartRate.HEALTH_DATA_TYPE,
+            HealthPermissionManager.PermissionType.READ
+        )
         val pmsManager = HealthPermissionManager(mStore);
         try {
-            pmsManager.requestPermissions(Collections.singleton(permKey), this)
+            pmsManager.requestPermissions(mutableSetOf(permKey, permKey2), this)
                 .setResultListener { result ->
                     println("Permission callback received")
-                    val resultMap = result.resultMap;
-
+                    val resultMap = result.resultMap
+                    println(resultMap.entries)
                     if (resultMap.containsValue(false)) {
                         showPermissionAlarmDialog()
-                    } else {
                     }
                 }
         } catch (e: Exception) {
@@ -119,10 +122,14 @@ class MainActivity : AppCompatActivity() {
                 HealthConstants.StepCount.HEALTH_DATA_TYPE,
                 HealthPermissionManager.PermissionType.READ
             )
+        val permKey2 = HealthPermissionManager.PermissionKey(
+            HealthConstants.HeartRate.HEALTH_DATA_TYPE,
+            HealthPermissionManager.PermissionType.READ
+        )
         val pmsManager = HealthPermissionManager(mStore)
         try {
-            val resultMap = pmsManager.isPermissionAcquired(Collections.singleton(permKey))
-            return resultMap.get(permKey) ?: false
+            val resultMap = pmsManager.isPermissionAcquired(mutableSetOf(permKey, permKey2))
+            return resultMap.get(permKey2) ?: false
         } catch (e: Exception) {
             println("Error getting permission ${e.message}")
         }
